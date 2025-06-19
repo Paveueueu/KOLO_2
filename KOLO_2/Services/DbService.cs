@@ -12,46 +12,44 @@ public class DbService : IDbService
         _context = context;
     }
     
-    public async Task<ICollection<AB>> GetABsData(string? aLastName)
+    
+    
+    /*
+     public async Task<ICollection<Order>> GetOrdersData(string? clientLastName)
     {
-        return await _context.ABs
-            .Include(ab => ab.A)
-            .Include(ab => ab.ABCs)
-            .ThenInclude(abc => abc.C)
-            .Where(ab => aLastName == null || ab.A.LastName == aLastName)
+        return await _context.Orders
+            .Include(e => e.Client)
+            .Include(e => e.OrderPastries)
+            .ThenInclude(e => e.Pastry)
+            .Where(e => clientLastName == null || e.Client.LastName == clientLastName)
             .ToListAsync();
     }
-    
-    public async Task<A?> GetAByLastName(string lastName)
+
+    public async Task<bool> DoesClientExist(int clientID)
     {
-        return await _context.As.FirstOrDefaultAsync(a => a.LastName == lastName);
-    }
-    
-    
-    public async Task<bool> DoesAExist(int idA)
-    {
-        return await _context.As.AnyAsync(a => a.Id == idA);
+        return await _context.Clients.AnyAsync(e => e.Id == clientID);
     }
 
-    public async Task<bool> DoesBExist(int idB)
+    public async Task<bool> DoesEmployeeExist(int employeeID)
     {
-        return await _context.Bs.AnyAsync(b => b.Id == idB);
+        return await _context.Employees.AnyAsync(e => e.Id == employeeID);
     }
 
-    public async Task AddNewAB(AB ab)
+    public async Task AddNewOrder(Order order)
     {
-        await _context.AddAsync(ab);
+        await _context.AddAsync(order);
         await _context.SaveChangesAsync();
     }
 
-    public async Task<C?> GetCByName(string name)
+    public async Task<Pastry?> GetPastryByName(string name)
     {
-        return await _context.Cs.FirstOrDefaultAsync(c => c.Name == name);
+        return await _context.Pastries.FirstOrDefaultAsync(e => e.Name == name);
     }
 
-    public async Task AddABCs(IEnumerable<ABC> abcs)
+    public async Task AddOrderPastries(IEnumerable<OrderPastry> orderPastries)
     {
-        await _context.AddRangeAsync(abcs);
+        await _context.AddRangeAsync(orderPastries);
         await _context.SaveChangesAsync();
     }
+    */
 }
