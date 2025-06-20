@@ -52,4 +52,60 @@ public class DbService : IDbService
         await _context.SaveChangesAsync();
     }
     */
+    
+    
+    /*
+     * public async Task<Order> GetByIdAsync(int id)
+    {
+    return await _context.Orders
+        .Include(o => o.Items)
+        .FirstOrDefaultAsync(o => o.Id == id);
+    }
+    public async Task<Order> GetByOrderNumberAsync(string orderNumber)
+    {
+        return await _context.Orders
+            .Include(o => o.Items)
+            .FirstOrDefaultAsync(o => o.OrderNumber == orderNumber);
+    }
+    public async Task<IEnumerable<Order>> GetAllAsync()
+    {
+        return await _context.Orders
+            .Include(o => o.Items)
+            .ToListAsync();
+    }
+    public async Task<IEnumerable<Order>> GetByCustomerIdAsync(string customerId)
+    {
+        return await _context.Orders
+            .Include(o => o.Items)
+            .Where(o => o.CustomerId == customerId)
+            .ToListAsync();
+    }
+    public async Task<Order> CreateAsync(Order order)
+    {
+        _context.Orders.Add(order);
+        await _context.SaveChangesAsync();
+        return order;
+    }
+    public async Task UpdateAsync(Order order)
+    {
+        _context.Entry(order).State = EntityState.Modified;
+        foreach (var item in order.Items)
+        {
+            if (item.Id == 0)
+                _context.OrderItems.Add(item);
+            else
+                _context.Entry(item).State = EntityState.Modified;
+        }
+        await _context.SaveChangesAsync();
+    }
+    public async Task DeleteAsync(int id)
+    {
+        var order = await _context.Orders.FindAsync(id);
+        if (order != null)
+        {
+            _context.Orders.Remove(order);
+            await _context.SaveChangesAsync();
+        }
+    }
+     */
 }
