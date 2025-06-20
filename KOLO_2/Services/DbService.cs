@@ -1,4 +1,5 @@
 ﻿using KOLO_2.Data;
+using KOLO_2.DTOs;
 using KOLO_2.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,100 +13,64 @@ public class DbService : IDbService
         _context = context;
     }
     
-    
-    
-    /*
-     public async Task<ICollection<Order>> GetOrdersData(string? clientLastName)
+    public async Task<GetInfoDto?> GetInfoAsync(int characterId)
     {
-        return await _context.Orders
-            .Include(e => e.Client)
-            .Include(e => e.OrderPastries)
-            .ThenInclude(e => e.Pastry)
-            .Where(e => clientLastName == null || e.Client.LastName == clientLastName)
-            .ToListAsync();
+        var result = _context.Characters
+            .Where(character => character.Id == characterId)
+            .Include(character => character.CharacterTitles)
+            .ThenInclude(characterTitle => characterTitle.Title)
+            .Include(character => character.Backpacks)
+            .Select(character => new GetInfoDto
+            {
+                FirstName = character.FirstName,
+                LastName = character.LastName,
+                CurrentWeight = character.CurrentWeight,
+                MaxWeight = character.MaxWeight,
+                Items = character.Backpacks.Select(backpack => new ItemDto
+                {
+                    ItemName = backpack.Item.Name,
+                    ItemWeight = backpack.Item.Weight,
+                    ItemAmount = backpack.Amount,
+                }).ToList(),
+                Titles = character.CharacterTitles.Select(ct => new TitleDto
+                {
+                    Name = ct.Title.Name,
+                    AcquiredAt = ct.AcquiredAt
+                }).ToList()
+            })
+            .FirstOrDefaultAsync();
+        
+        return await result;
     }
 
-    public async Task<bool> DoesClientExist(int clientID)
+    public async Task<bool> DoesCharacterExist(int idCharacter)
     {
-        return await _context.Clients.AnyAsync(e => e.Id == clientID);
+        return await _context.Characters.AnyAsync(e => e.Id == idCharacter);
     }
 
-    public async Task<bool> DoesEmployeeExist(int employeeID)
+    public async Task<Character?> GetCharacter(int idCharacter)
     {
-        return await _context.Employees.AnyAsync(e => e.Id == employeeID);
+        return await _context.Characters.FirstOrDefaultAsync(e => e.Id == idCharacter);
     }
 
-    public async Task AddNewOrder(Order order)
+    public async Task<bool> DoesItemExist(int itemId)
     {
-        await _context.AddAsync(order);
-        await _context.SaveChangesAsync();
+        return await _context.Items.AnyAsync(e => e.Id == itemId);
     }
 
-    public async Task<Pastry?> GetPastryByName(string name)
+    public async Task<Item?> GetItem(int itemId)
     {
-        return await _context.Pastries.FirstOrDefaultAsync(e => e.Name == name);
+        return await _context.Items.FirstOrDefaultAsync(e => e.Id == itemId);
     }
 
-    public async Task AddOrderPastries(IEnumerable<OrderPastry> orderPastries)
+    public async Task AddNewBackpackItem(int itemId, int characterId)
     {
-        await _context.AddRangeAsync(orderPastries);
-        await _context.SaveChangesAsync();
-    }
-    */
-    
-    
-    /*
-     * public async Task<Order> GetByIdAsync(int id)
-    {
-    return await _context.Orders
-        .Include(o => o.Items)
-        .FirstOrDefaultAsync(o => o.Id == id);
-    }
-    public async Task<Order> GetByOrderNumberAsync(string orderNumber)
-    {
-        return await _context.Orders
-            .Include(o => o.Items)
-            .FirstOrDefaultAsync(o => o.OrderNumber == orderNumber);
-    }
-    public async Task<IEnumerable<Order>> GetAllAsync()
-    {
-        return await _context.Orders
-            .Include(o => o.Items)
-            .ToListAsync();
-    }
-    public async Task<IEnumerable<Order>> GetByCustomerIdAsync(string customerId)
-    {
-        return await _context.Orders
-            .Include(o => o.Items)
-            .Where(o => o.CustomerId == customerId)
-            .ToListAsync();
-    }
-    public async Task<Order> CreateAsync(Order order)
-    {
-        _context.Orders.Add(order);
-        await _context.SaveChangesAsync();
-        return order;
-    }
-    public async Task UpdateAsync(Order order)
-    {
-        _context.Entry(order).State = EntityState.Modified;
-        foreach (var item in order.Items)
+        await _context.Backpacks.AddAsync(new Backpack
         {
-            if (item.Id == 0)
-                _context.OrderItems.Add(item);
-            else
-                _context.Entry(item).State = EntityState.Modified;
-        }
+            IdItem = itemId,
+            IdCharacter = characterId,
+            Amount = 1
+        });
         await _context.SaveChangesAsync();
     }
-    public async Task DeleteAsync(int id)
-    {
-        var order = await _context.Orders.FindAsync(id);
-        if (order != null)
-        {
-            _context.Orders.Remove(order);
-            await _context.SaveChangesAsync();
-        }
-    }
-     */
 }

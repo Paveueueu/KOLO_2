@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KOLO_2", "KOLO_2\KOLO_2.csproj", "{2DAD132A-B415-4475-800F-504D4F1A6EF9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KOLO_2", "KOLO_2\KOLO_2.csproj", "{2AE31B2B-273E-4346-B38C-DD41837F66CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +8,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2DAD132A-B415-4475-800F-504D4F1A6EF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2DAD132A-B415-4475-800F-504D4F1A6EF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2DAD132A-B415-4475-800F-504D4F1A6EF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2DAD132A-B415-4475-800F-504D4F1A6EF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AE31B2B-273E-4346-B38C-DD41837F66CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AE31B2B-273E-4346-B38C-DD41837F66CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AE31B2B-273E-4346-B38C-DD41837F66CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AE31B2B-273E-4346-B38C-DD41837F66CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

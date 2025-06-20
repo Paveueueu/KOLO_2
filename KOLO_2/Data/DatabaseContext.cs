@@ -1,108 +1,90 @@
-﻿using KOLO_2.Models;
+using KOLO_2.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace KOLO_2.Data;
+
 
 public class DatabaseContext : DbContext
 {
     protected DatabaseContext() {}
     public DatabaseContext(DbContextOptions options) : base(options) {}
-    
-    public DbSet<A> As { get; set; }
-    public DbSet<B> Bs { get; set; }
-    public DbSet<C> Cs { get; set; }
-    
-    public DbSet<AB> ABs { get; set; }
-    public DbSet<ABC> ABCs { get; set; }
-    
+
+    public DbSet<Item> Items { get; set; }
+    public DbSet<Character> Characters { get; set; }
+    public DbSet<Title> Titles { get; set; }
+    public DbSet<Backpack> Backpacks { get; set; }
+    public DbSet<CharacterTitle> CharacterTitles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
-        
-        modelBuilder.Entity<A>().HasData(new List<A>
+    base.OnModelCreating(modelBuilder);
+    
+        modelBuilder.Entity<Item>().HasData(new List<Item>
         {
-            new A {
+            new Item {
                 Id = 1,
-                LastName = "aaa1"
+                Name = "item1",
+                Weight = 11,
             },
-            new A {
+            new Item {
                 Id = 2,
-                LastName = "aaa2"
+                Name = "item2",
+                Weight = 11,
             },
-        });
-        
-        modelBuilder.Entity<B>().HasData(new List<B>
-        {
-            new B {
-                Id = 1
-            },
-            new B {
-                Id = 2
-            },
-        });
-        
-        modelBuilder.Entity<C>().HasData(new List<C>
-        {
-            new C {
-                Id = 1,
-                Name = "one"
-            },
-            new C {
-                Id = 2,
-                Name = "two"
-            },
-            new C {
+            new Item {
                 Id = 3,
-                Name = "three"
-            }
+                Name = "item3",
+                Weight = 5,
+            },
         });
         
-        modelBuilder.Entity<AB>().HasData(new List<AB>
+        modelBuilder.Entity<Character>().HasData(new List<Character>
         {
-            new AB
-            {
+            new Character {
                 Id = 1,
-                IdA = 1,
-                IdB = 2
+                FirstName = "str_3",
+                LastName = "str_4",
+                CurrentWeight = 12,
+                MaxWeight = 1000,
             },
-            new AB
-            {
-                Id = 2,
-                IdA = 1,
-                IdB = 1
-            },
-            new AB
-            {
-                Id = 3,
-                IdA = 2,
-                IdB = 1
-            }
         });
         
-        
-        modelBuilder.Entity<ABC>().HasData(new List<ABC>
+        modelBuilder.Entity<Title>().HasData(new List<Title>
         {
-            new ABC
-            {
-                IdAB = 1,
-                IdC = 1,
+            new Title {
+                Id = 1,
+                Name = "something"
             },
-            new ABC
-            {
-                IdAB = 1,
-                IdC = 3,
+            new Title {
+                Id = 2,
+                Name = "sth2"
             },
-            new ABC
-            {
-                IdAB = 2,
-                IdC = 2,
-            },
-            new ABC
-            {
-                IdAB = 2,
-                IdC = 1,
-            }
         });
+        
+        modelBuilder.Entity<Backpack>().HasData(new List<Backpack>
+        {
+            new Backpack {
+                Id = 1,
+                Amount = 22,
+                IdItem = 1,
+                IdCharacter = 1,
+            },
+        });
+        
+        modelBuilder.Entity<CharacterTitle>().HasData(new List<CharacterTitle>
+        {
+            new CharacterTitle {
+                CharacterId = 1,
+                TitleId = 1,
+                AcquiredAt = DateTime.Parse("2000-01-01")
+            },
+            new CharacterTitle {
+                CharacterId = 1,
+                TitleId = 2,
+                AcquiredAt = DateTime.Parse("2000-01-02")
+            },
+        });
+        
     }
 }
+
